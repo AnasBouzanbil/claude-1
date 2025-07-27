@@ -1,0 +1,5 @@
+server {
+    listen 9055;
+    root /var/www/html/;
+    index index.html;
+}

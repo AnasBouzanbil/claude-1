@@ -1,0 +1,32 @@
+- name: Install Docker and Compose tools
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Docker Engine
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
+
+    - name: Install Docker Compose plugin (modern 'docker compose')
+      apt:
+        name: docker-compose-plugin
+        state: present
+
+    - name: Copy project to server
+      copy:
+        src: ./inception/
+        dest: /home/anas/inception1
+
+    - name: Create data directories for volumes
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        mode: '0755'
+      loop:
+        - /home/anas/data/mariadb
+        - /home/anas/data/wordpress
+
+    - name: Start containers with Docker Compose
+      command: docker compose -f /home/anas/inception1/srcs/docker-compose.yml up -d

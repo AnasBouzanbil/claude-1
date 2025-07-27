@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    image: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql/
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+  wordpress:
+    container_name: wordpress
+    build: ./requirements/wordpress
+    image: wordpress
+    volumes:
+      - wordpress:/var/www/html/
+    depends_on:
+      - mariadb
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    image: nginx
+    ports:
+      - 443:443
+    depends_on:
+      - wordpress
+    volumes:
+      - wordpress:/var/www/html/
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+  # Bonus part
+  ftp-server:
+    container_name: ftp-server
+    build: ./requirements/bonus/ftp-server/
+    image: ftp-server
+    env_file: .env
+    volumes:
+      - wordpress:/var/www/html/wordpress
+    networks:
+      - inception
+    ports:
+      - "21:21"
+    restart: always
+  portainer:
+    container_name: portainer
+    build: ./requirements/bonus/portainer/
+    image: portainer
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    ports:
+      - "9443:9443"
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+  redis:
+    container_name: redis
+    build: ./requirements/bonus/redis
+    image: redis
+    networks:
+      - inception
+    restart: always
+  static-website:
+    container_name: static-website
+    build: ./requirements/bonus/static-website
+    image: static-website
+    ports:
+      - 9055:9055
+    networks:
+      - inception
+    restart: always
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/anas/data/mariadb/
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/anas/data/wordpress/
+
+networks:
+  inception:
+    name: inception
