@@ -1,0 +1,52 @@
+server {
+	listen 443 ssl;
+	server_name abouzanb.42.fr;
+    ssl_certificate /etc/nginx/ssl/certificate.crt;
+    ssl_certificate_key /etc/nginx/ssl/private.key;
+
+	ssl_protocols TLSv1.3 TLSv1.2;
+	root /var/www/html/wordpress;
+
+	index index.html index.php;
+
+	# WordPress location (default)
+	location / {
+		try_files $uri $uri/ /index.php?$args;
+	}
+
+	# WordPress PHP processing
+	location ~ \.php$ {
+        fastcgi_pass wordpress:9000;
+		index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+	}
+
+	# PHPMyAdmin proxy
+	location /phpmyadmin {
+		return 301 https://$host:8080/;
+	}
+}
+
+# PHPMyAdmin server on port 8080
+server {
+	listen 8080 ssl;
+	server_name abouzanb.42.fr;
+    ssl_certificate /etc/nginx/ssl/certificate.crt;
+    ssl_certificate_key /etc/nginx/ssl/private.key;
+
+	ssl_protocols TLSv1.3 TLSv1.2;
+
+	location / {
+		proxy_pass http://phpmyadmin:80;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+	}
+}
+server {
+    listen 80;
+    server_name abouzanb.42.fr;
+    return 301 https://$host$request_uri;
+}
