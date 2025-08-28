@@ -2,12 +2,6 @@
   hosts: all
   become: yes
   tasks:
-    - name: Create folder for the project and create also folders if not exists
-      file:
-        path: /var/html/www/inception
-        state: directory
-        recurse: yes
-
     - name: update and upgrade apt packages
       apt:
         update_cache: yes
@@ -42,13 +36,6 @@
         name: docker-ce
         state: latest
         update_cache: true
-
-    - name: Install docker-compose from official github repo
-      get_url:
-        url : https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
-        dest: /usr/local/bin/docker-compose
-        mode: 'u+x,g+x'
-
     - name: Ensure Docker CLI plugins directory exists
       file:
         path: /usr/lib/docker/cli-plugins
@@ -60,4 +47,26 @@
         url: https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-linux-x86_64
         dest: /usr/lib/docker/cli-plugins/docker-compose
         mode: '0755'
-
+    - name : create Folder for the project
+      file:
+        path: /home/anas/inception
+        state: directory
+        recurse: yes
+    - name : create Data for db
+      file:
+        path: /home/anas/data/mariadb
+        state: directory
+        recurse: yes
+    - name : create Data for wordpress
+      file:
+        path: /home/anas/data/wordpress
+        state: directory
+        recurse: yes
+    - name : copy data to remote server
+      copy :
+        src: ./inception/
+        dest: /home/anas/inception
+    - name : cd inception and run make
+      command: make
+      args:
+        chdir: /home/anas/inception

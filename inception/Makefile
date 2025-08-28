@@ -5,7 +5,7 @@ up :
 	cd srcs && docker compose up -d
 
 down :
-	cd srcs && docker-compose down
+	cd srcs && docker compose down
 re : down build up 
 
 rm :
