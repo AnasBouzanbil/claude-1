@@ -47,6 +47,11 @@
         url: https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-linux-x86_64
         dest: /usr/lib/docker/cli-plugins/docker-compose
         mode: '0755'
+    - name: Enable and start Docker service
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
     - name : create Folder for the project
       file:
         path: /home/anas/inception
@@ -70,3 +75,7 @@
       command: make
       args:
         chdir: /home/anas/inception
+    - name : run docker compose up -d
+      command: docker compose up -d
+      args:
+        chdir: /home/anas/inception/srcs

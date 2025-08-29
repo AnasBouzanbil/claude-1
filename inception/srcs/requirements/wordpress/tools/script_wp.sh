@@ -11,9 +11,9 @@ tar -xzvf latest.tar.gz
 
 mv /tmp/wp-config.php /var/www/html/wordpress/wp-config.php
 
-sed -i 's/database_name_here/'$DB_NAME'/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/username_here/'$DB_USER'/g' /var/www/html/wordpress/wp-config.php
-sed -i 's/password_here/'$DB_PASSWORD'/g' /var/www/html/wordpress/wp-config.php
+# sed -i 's/database_name_here/'$DB_NAME'/g' /var/www/html/wordpress/wp-config.php
+# sed -i 's/username_here/'$DB_USER'/g' /var/www/html/wordpress/wp-config.php
+# sed -i 's/password_here/'$DB_PASSWORD'/g' /var/www/html/wordpress/wp-config.php
 
 
 wp core install --url="abouzanb.42.fr" --title="Wordpress" --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" --admin_email="$ADMIN_EMAIL" --allow-root --path=/var/www/html/wordpress
