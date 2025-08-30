@@ -1,0 +1,11 @@
+- name : setup necessary packages
+  import_playbook: PLayBooks/system-setup.yaml
+- name : install docker and docker-compose
+  import_playbook: PLayBooks/docker-install.yaml
+  become: yes
+- name : create project structure
+  import_playbook: PLayBooks/Setup.yaml
+- name : copy project files
+  import_playbook: PLayBooks/copyProject.yaml
+- name : run project
+  import_playbook: PLayBooks/Run-Project.yaml

@@ -1,0 +1,14 @@
+- name : cd inception and run make
+  hosts: all
+  become: yes
+  tasks:
+    - command: make
+      args:
+        chdir: /home/anas/inception
+- name : run docker compose up -d
+  become: yes
+  hosts: all
+  tasks:
+    - command: docker compose up -d
+      args:
+        chdir: /home/anas/inception/srcs
