@@ -2,5 +2,5 @@
 - name: Copy project files to server
   copy:
     src: ../inception/
-    dest: /home/anas/inception/
+    dest: "{{ ansible_env.HOME }}/inception/"
 

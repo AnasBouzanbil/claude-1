@@ -2,10 +2,10 @@
 - name: Run make command
   command: make
   args:
-    chdir: /home/anas/inception
+    chdir: "{{ ansible_env.HOME }}/inception"
 
 - name: Start WordPress with Docker Compose
   command: docker compose up -d
   args:
-    chdir: /home/anas/inception/srcs
-  become_user: anas
+    chdir: "{{ ansible_env.HOME }}/inception/srcs"
+  become_user: "{{ ansible_env.USER }}"

@@ -63,13 +63,13 @@ volumes:
   wp-data:
     driver: local
     driver_opts:
-      device: /home/anas/data/wordpress
+      device: ${HOME}/data/wordpress
       type: none
       o: bind
   mariadb:
     driver: local
     driver_opts:
-      device: /home/anas/data/mariadb
+      device: ${HOME}/data/mariadb
       type: none
       o: bind
 
