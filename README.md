@@ -2,7 +2,7 @@
 
 ## Universal Multi-User Setup
 
-This project works on any Linux host with any user (not just 'anas').
+This project works on any Linux host with any user automatically.
 
 ### Quick Setup
 
@@ -12,9 +12,10 @@ This project works on any Linux host with any user (not just 'anas').
    cd claude-1
    ```
 
-2. **Setup environment (automatically detects current user):**
+2. **Create environment file:**
    ```bash
-   ./setup-env.sh
+   cp env.example.txt inception/.env
+   # Edit inception/.env if needed (optional)
    ```
 
 3. **Deploy with Ansible:**
@@ -22,26 +23,24 @@ This project works on any Linux host with any user (not just 'anas').
    ansible-playbook -i hosts.ini playbook.yaml
    ```
 
+### How It Works
+
+- **Automatic User Detection**: Uses `$HOME` and `$USER` environment variables
+- **Dynamic Paths**: Data directories created in current user's home automatically
+- **No Manual Configuration**: Works out of the box for any user
+
 ### What Gets Created
 
-- Data directories in `$HOME/data/` (current user's home)
+- Data directories in `$HOME/data/` (automatically detected)
 - WordPress files in `$HOME/inception/`
 - Docker volumes mounted to user-specific paths
-- Environment configured for current user
 
 ### Features
 
 - ✅ **Universal**: Works with any username (anas, amine, root, etc.)
-- ✅ **Dynamic paths**: Uses `$HOME` and `$USER` variables
-- ✅ **Auto-detection**: Automatically configures for current user
-- ✅ **Clean separation**: Each user gets their own data directories
+- ✅ **Zero Configuration**: No scripts to run, works automatically
+- ✅ **Dynamic**: Automatically adapts to current user and system
+- ✅ **Clean**: Simple setup without unnecessary complexity
 
-### Manual Setup
 
-If you prefer manual setup:
-
-```bash
-# Copy environment template
-cp env.example.txt inception/.env
-# Edit inception/.env to match your user/paths
-```
+https://freemyip.com/update?token=95c162afa7d8d44f2dc6caca&domain=abouzanb.freemyip.com

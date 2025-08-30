@@ -1,14 +1,19 @@
 ---
-- name: Download Docker GPG key
-  get_url:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /usr/share/keyrings/docker-archive-keyring.gpg
-    mode: '0644'
+- name: Remove old Docker GPG key if exists
+  file:
+    path: /usr/share/keyrings/docker-archive-keyring.gpg
+    state: absent
+
+- name: Download and add Docker GPG key
+  shell: |
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    chmod 644 /usr/share/keyrings/docker-archive-keyring.gpg
 
 - name: Add Docker repository
   apt_repository:
     repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu jammy stable"
     state: present
+    update_cache: yes
 
 - name: Install Docker
   apt:
@@ -39,3 +44,15 @@
     name: "{{ ansible_user }}"
     groups: docker
     append: yes
+
+
+
+
+
+
+
+
+
+
+
+    

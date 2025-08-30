@@ -11,12 +11,6 @@
     - name: Install Docker
       include_tasks: playbooks/docker-install.yaml
       
-    - name: Setup dynamic environment
-      shell: ./setup-env.sh
-      args:
-        chdir: "{{ playbook_dir }}"
-      become_user: "{{ ansible_env.USER }}"
-      
     - name: Create project folders
       include_tasks: playbooks/setup.yaml
       
