@@ -1,7 +1,0 @@
-- name : copy data to remote server
-  hosts: all
-  become: yes
-  tasks:
-  - copy:
-      src: ../inception/
-      dest: /home/anas/inception

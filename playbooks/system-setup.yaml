@@ -1,0 +1,15 @@
+---
+- name: Update system packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+    
+- name: Install required packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - python3-pip
+    state: present
+    update_cache: yes

@@ -1,11 +1,20 @@
-- name : setup necessary packages
-  import_playbook: PLayBooks/system-setup.yaml
-- name : install docker and docker-compose
-  import_playbook: PLayBooks/docker-install.yaml
+---
+- name: Deploy WordPress with Docker (Cloud-1)
+  hosts: all
   become: yes
-- name : create project structure
-  import_playbook: PLayBooks/Setup.yaml
-- name : copy project files
-  import_playbook: PLayBooks/copyProject.yaml
-- name : run project
-  import_playbook: PLayBooks/Run-Project.yaml
+  
+  tasks:
+    - name: Setup system packages
+      include_tasks: playbooks/system-setup.yaml
+      
+    - name: Install Docker
+      include_tasks: playbooks/docker-install.yaml
+      
+    - name: Create project folders
+      include_tasks: playbooks/setup.yaml
+      
+    - name: Copy project files
+      include_tasks: playbooks/copy-project.yaml
+      
+    - name: Start WordPress project
+      include_tasks: playbooks/run-project.yaml

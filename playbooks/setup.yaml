@@ -1,0 +1,26 @@
+---
+- name: Create project folder
+  file:
+    path: /home/anas/inception
+    state: directory
+    owner: anas
+    group: anas
+    mode: '0755'
+
+- name: Create data folder 
+  file:
+    path: /home/anas/data
+    state: directory
+    mode: '0755'
+
+- name: Create data folder for MariaDB
+  file:
+    path: /home/anas/data/mariadb
+    state: directory
+    mode: '0755'
+
+- name: Create data folder for WordPress
+  file:
+    path: /home/anas/data/wordpress
+    state: directory
+    mode: '0755'
