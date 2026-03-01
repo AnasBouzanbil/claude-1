@@ -5,7 +5,7 @@
     chdir: "{{ ansible_env.HOME }}/inception"
 
 - name: Start WordPress with Docker Compose
-  command: docker compose up -d
+  command: make up
   args:
-    chdir: "{{ ansible_env.HOME }}/inception/srcs"
+    chdir: "{{ ansible_env.HOME }}/inception"
   become_user: "{{ ansible_env.USER }}"
