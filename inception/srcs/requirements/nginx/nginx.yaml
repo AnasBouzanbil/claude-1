@@ -1,4 +1,0 @@
-- name : run and build nginx
-  command: docker compose up -d --build nginx
-  args:
-    chdir: "{{ ansible_env.HOME }}/inception/srcs"

@@ -1,4 +1,0 @@
-- name : run and build wordpress
-  command: docker compose up -d --build wordpress
-  args:
-    chdir: "{{ ansible_env.HOME }}/inception/srcs"
