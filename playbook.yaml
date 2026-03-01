@@ -4,7 +4,7 @@
   become: yes
   gather_facts: yes
   
-  tasks:
+  pre_tasks:
     - name: Setup system packages
       include_tasks: playbooks/system-setup.yaml
       
@@ -17,5 +17,9 @@
     - name: Copy project files
       include_tasks: playbooks/copy-project.yaml
       
-    - name: Start WordPress project
-      include_tasks: playbooks/run-project.yaml
+    
+  roles:
+    - mariadb
+    - wordpress
+    - nginx
+    - phpmyadmin

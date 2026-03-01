@@ -46,5 +46,6 @@ else
     echo "WordPress is already installed."
 fi
 
+mkdir -p /run/php
 echo "Starting PHP-FPM..."
 exec /usr/sbin/php-fpm7.4 -F

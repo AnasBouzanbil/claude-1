@@ -1,0 +1,4 @@
+- name : run and build phpmyadmin
+  command: docker compose up -d --build phpmyadmin
+  args:
+    chdir: "{{ ansible_env.HOME }}/inception/srcs"

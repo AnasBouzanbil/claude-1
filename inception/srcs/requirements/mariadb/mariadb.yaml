@@ -1,0 +1,4 @@
+- name : run and build mariadb
+  command: docker compose up -d --build mariadb
+  args:
+    chdir: "{{ ansible_env.HOME }}/inception/srcs"
